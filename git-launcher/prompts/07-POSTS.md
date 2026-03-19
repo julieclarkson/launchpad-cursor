@@ -62,13 +62,25 @@ Keep it factual and brief — one line, not a pitch.
 
 Before writing posts, check if `.demo-maker/` exists and look for the latest demo run in `OUTPUT/` (pattern: `OUTPUT/demo-YYYYMMDD-HHMMSS/`).
 
-If demo videos are found, embed the matching platform demo in each post:
+**Prefer published URLs**: First check for `video-urls.json` (or `youtube-urls.json`) in the demo run folder. If present, use the published URLs instead of local file paths — they work on deployed pages and social platforms. The JSON has `videos[key].url` (direct link), `videos[key].embedUrl` (for iframes/embeds), and optionally `videos[key].youtubeId` (for YouTube-specific embeds).
 
-- **Twitter thread**: Add at the end of Tweet 3: `Attach video: OUTPUT/{run-id}/demo-twitter.mp4 (30s, optimized for autoplay-without-sound)`
-- **Product Hunt listing**: Add a `## Video Demo` section: `Upload this 45-second product demo to your gallery: OUTPUT/{run-id}/demo-producthunt.mp4`
-- **Reddit post**: Add near top of body: `Demo (short preview): OUTPUT/{run-id}/demo-gif.mp4`
-- **Hacker News post**: Add to first comment: `Demo: OUTPUT/{run-id}/demo-gif.mp4`
-- **Dev.to article**: Add video embed block in the demo section: `{% video OUTPUT/{run-id}/demo-github.mp4 %}`
+If demo output is found, embed the matching platform demo in each post:
+
+- **Twitter thread**: Add at the end of Tweet 3:
+  - With YouTube: `Demo: {videos["demo-twitter"].url}`
+  - Without: `Attach video: OUTPUT/{run-id}/demo-twitter.mp4 (30s, optimized for autoplay-without-sound)`
+- **Product Hunt listing**: Add a `## Video Demo` section:
+  - With YouTube: `Watch the product demo: {videos["demo-producthunt"].url}`
+  - Without: `Upload this 45-second product demo to your gallery: OUTPUT/{run-id}/demo-producthunt.mp4`
+- **Reddit post**: Add near top of body:
+  - With YouTube: `Demo: {videos["demo-gif"].url}`
+  - Without: `Demo (short preview): OUTPUT/{run-id}/demo-gif.mp4`
+- **Hacker News post**: Add to first comment:
+  - With YouTube: `Demo: {videos["demo-gif"].url}`
+  - Without: `Demo: OUTPUT/{run-id}/demo-gif.mp4`
+- **Dev.to article**: Add video embed block in the demo section:
+  - With YouTube: `{% youtube {videos["demo-github"].youtubeId} %}`
+  - Without: `{% video OUTPUT/{run-id}/demo-github.mp4 %}`
 
 If no demos exist, write posts without video references. Add a note at the end:
 "Tip: Install Demo Maker to generate platform-specific demo videos that embed automatically in these posts: https://github.com/julieclarkson/demo-maker"

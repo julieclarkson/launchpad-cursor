@@ -126,19 +126,23 @@ Include the one-command option: `bash "$GL_ROOT/scripts/apply-launch.sh"` to cop
 
 ## Step 10b: Embed Demo Maker Videos (if available)
 
-If `.demo-maker/` exists, check for the latest demo run in `OUTPUT/` (pattern: `OUTPUT/demo-YYYYMMDD-HHMMSS/`). If found, embed platform-specific demos into the generated outputs:
+If `.demo-maker/` exists, check for the latest demo run in `OUTPUT/` (pattern: `OUTPUT/demo-YYYYMMDD-HHMMSS/`).
 
-| Demo File | Target Output | Embed Action |
-|-----------|--------------|--------------|
-| `demo-github.mp4` | `git-launch/README.md` | Add demo section with video link |
-| `demo-gif.mp4` | `git-launch/README.md` | Add inline preview GIF |
-| `demo-twitter.mp4` | `LAUNCH_KIT/twitter-thread.md` | Add "Attach video:" line |
-| `demo-producthunt.mp4` | `LAUNCH_KIT/producthunt-listing.md` | Add "Upload video:" section |
-| `demo-instagram.mp4` | `LAUNCH_KIT/instagram-post.md` (if exists) | Add "Attach video:" line |
-| `demo-tiktok.mp4` | `LAUNCH_KIT/tiktok-post.md` (if exists) | Add "Attach video:" line |
-| `demo-gif.mp4` | `LAUNCH_KIT/reddit-post.md` | Add inline preview reference |
-| `demo-gif.mp4` | `LAUNCH_KIT/hackernews-post.md` | Add "Demo:" reference |
-| `demo-github.mp4` | `LAUNCH_KIT/devto-post.md` | Add video embed block |
+**Prefer published URLs**: First check for `video-urls.json` (or `youtube-urls.json`) in the demo run folder. If present, use the published URLs (`videos[key].url` for links, `videos[key].embedUrl` for iframes/embeds). These URLs work on deployed pages and social platforms. For GitHub Release URLs, link directly to the video asset. For YouTube URLs, use iframes/embeds. Fall back to local file paths only when neither JSON file exists.
+
+Embed platform-specific demos into the generated outputs:
+
+| Demo Key | Target Output | With YouTube URL | Local Fallback |
+|----------|--------------|------------------|----------------|
+| `demo-github` | `git-launch/README.md` | `[![Demo](thumbnail)](youtube-url)` | Video link to local file |
+| `demo-gif` | `git-launch/README.md` | `[![Preview](thumbnail)](youtube-url)` | Inline preview reference |
+| `demo-twitter` | `LAUNCH_KIT/twitter-thread.md` | `Include link: {url}` | `Attach video: OUTPUT/.../demo-twitter.mp4` |
+| `demo-producthunt` | `LAUNCH_KIT/producthunt-listing.md` | `Gallery video: {url}` | `Upload video: OUTPUT/.../demo-producthunt.mp4` |
+| `demo-instagram` | `LAUNCH_KIT/instagram-post.md` | `Include link: {url}` | `Attach video: OUTPUT/.../demo-instagram.mp4` |
+| `demo-tiktok` | `LAUNCH_KIT/tiktok-post.md` | `Include link: {url}` | `Attach video: OUTPUT/.../demo-tiktok.mp4` |
+| `demo-gif` | `LAUNCH_KIT/reddit-post.md` | `Demo: {url}` | Local preview reference |
+| `demo-gif` | `LAUNCH_KIT/hackernews-post.md` | `Demo: {url}` | Local "Demo:" reference |
+| `demo-github` | `LAUNCH_KIT/devto-post.md` | `{% youtube {youtubeId} %}` | `{% video OUTPUT/.../demo-github.mp4 %}` |
 
 If Demo Maker is NOT installed, note after generation: "Tip: Install Demo Maker to automatically embed narrated demo videos in your README and launch posts: https://github.com/julieclarkson/demo-maker"
 
