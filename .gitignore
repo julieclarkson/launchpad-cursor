@@ -1,0 +1,27 @@
+# Dependencies
+node_modules/
+.pnp.*
+
+# Environment variables
+.env
+.env.*
+!.env.example
+
+# Build output
+dist/
+build/
+.next/
+out/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+.idea/
+*.sw?
+
+# Certificates
+*.pem
+

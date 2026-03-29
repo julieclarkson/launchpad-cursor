@@ -1,0 +1,9 @@
+[submodule "case-study-maker"]
+	path = case-study-maker
+	url = https://github.com/julieclarkson/case-study-maker.git
+[submodule "demo-maker"]
+	path = demo-maker
+	url = https://github.com/julieclarkson/demo-maker.git
+[submodule "git-launcher"]
+	path = git-launcher
+	url = https://github.com/julieclarkson/git-launcher.git
